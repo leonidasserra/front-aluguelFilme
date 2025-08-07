@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <title>Confirmação</title>
 </head>
-<!-- Barra Superior -->
+<body>
+
+    <!-- Barra Superior -->
     <header class="header">
         <div class="logo">
             <h1>RentFlix</h1>
@@ -16,70 +18,60 @@
     <div class="sidebar">
         <ul>
             <a href="#">Ver Clientes</a>
-             <br>
             <a href="#">Novo Cliente</a>
-             <br>
-           
-            <br><br><br><br>
             <a href="#" id="exit-btn">Sair</a>
         </ul>
     </div>
-<body>
 
-<form form action="5.confirmarAluguel.html" method="get">    
-    <div>    
-        <h1>Confirmação</h1>
-        
+    <!-- Formulário de Confirmação -->
+    <form action="5.confirmarAluguel.html" method="get">    
+        <div>    
+            <h1>Confirmação</h1>
+        </div>  
 
+        <div class="rent-main-content">
+            <div class="filmes-rent" data-id="1">
+                <h2>Filme 1</h2>
+            </div>
 
-    <div class="filmes" data-id="1">
-        <h2>Filme 1</h2>
+            <div class="filmes-rent" data-id="2">
+                <h2>Filme 2</h2>
+            </div>
+
+            <div class="filmes-rent" data-id="3">
+                <h2>Filme 3</h2>
+            </div>
+
+            <br><br>
+
+            <div class="section-signup">
+                <label for="pessoa">Empréstimo para: </label>
+                <input type="text" id="pessoaAluguel" name="pessoaAluguel" required>
+            </div>
+
+            <br><br>
+
+            <div class="div-rent-btn">
+                <button type="submit" class="rent-btn">Confirmar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Janela de Confirmação -->
+    <div class="overlay" id="overlay"></div>
+    <div class="confirm-box" id="confirmBox">
+        <p>Você tem certeza?</p>
+        <button id="btnSim">Sim</button>
+        <button id="btnNao">Não</button>
     </div>
 
-    <div class="filmes" data-id="2">
-        <h2>Filme 2</h2>
+    <!-- Botão de Configurações -->
+    <div>
+        <br><br>
+        <form action="configuracoes.html" method="get">
+            <button type="submit" class="config-btn">Configurações</button>
+        </form>
     </div>
-
-    <div class="filmes" data-id="3">
-        <h2>Filme 3</h2>
-    </div>
-
-    </div>
-
-    <br><br>
-
-    <div class="section-signup">
-                        <label for="pessoa">Empréstimo para: </label>
-                        <input type="text" id="pessoaAluguel" name="pessoaAluguel" required>
-                    </div>
-
-    <br><br>
-    <button type="submit" class="login-btn">Confirmar</button>
-    </div>
-
-</form>
-
-<!-- Janela de Confirmação -->
-<div class="overlay" id="overlay"></div>
-<div class="confirm-box" id="confirmBox">
-    <p>Você tem certeza?</p>
-    <button id="btnSim">Sim</button>
-    <button id="btnNao">Não</button>
-</div>
-
-
-
-
-
-            
-
-            <!--  BTN de Config  -->
-            <div>
-                <br><br>
-                <form action="configuracoes.html" method="get">
-                <button type="submit" class="config-btn">Configurações</button>
-                </form>
-             </div>
 
 </body>
 </html>
