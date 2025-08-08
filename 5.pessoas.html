@@ -6,7 +6,8 @@
     <title>Pessoas</title>
 </head>
 
-<!-- Barra Superior -->
+<body>
+    <!-- Barra Superior -->
     <header class="header">
         <div class="logo">
             <h1>RentFlix</h1>
@@ -16,20 +17,16 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <ul>
-            <a href="#">Ver Clientes</a>
-             <br>
-            <a href="#">Novo Cliente</a>
-             <br>
-           
-            <a href="#" id="exit-btn">Sair</a>
+            <li><a href="#">Ver Clientes</a></li>
+            <li><a href="#">Novo Cliente</a></li>
+            <li><a href="#" id="exit-btn">Sair</a></li>
         </ul>
     </div>
 
-<body>
-<div>    
-    <h1>Pessoas</h1>
+    <!-- Conteúdo Principal -->
+    <main>
+        <h1>Pessoas</h1>
 
-    <form action="3.telaInicial.html">
         <div class="main-content-pessoas">
             <div class="pessoas" data-id="1">
                 <h2>Pessoa 1</h2>
@@ -37,7 +34,6 @@
                     <a href="5.1.detalhesPessoa.html" class="detalhes-btn">Ver Detalhes</a>
                 </div>
             </div>
-
 
             <div class="pessoas" data-id="2">
                 <h2>Pessoa 2</h2>
@@ -53,28 +49,29 @@
                 </div>    
             </div>
 
-            <br><br>
-
             <div class="div-back-btn">
-                <button type="submit" class="back-btn">Voltar</button>
-            </div>     
-        </div>    
-    </form>
-
-
-</div>
-
-
-
-
-            <br><br><br><br>
-
-            <!--  BTN de Config  -->
-            <div>
-                <form action="configuracoes.html" method="get">
-                <button type="submit" class="config-btn">Configurações</button>
+                <form action="3.telaInicial.html">
+                    <button type="submit" class="back-btn">Voltar</button>
                 </form>
-             </div>
+            </div>     
+        </div>
 
+        <!-- Paginação -->
+        <nav class="pagination" aria-label="Navegação de páginas">
+            <ul>
+                <li><a href="?page=1" class="active">1</a></li>
+                <li><a href="?page=2">2</a></li>
+                <li><a href="?page=3">3</a></li>
+                <li><a href="?page=2">Próximo</a></li>
+            </ul>
+        </nav>
+
+        <!-- Botão Configurações -->
+        <div>
+            <form action="configuracoes.html" method="get">
+                <button type="submit" class="config-btn">Configurações</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

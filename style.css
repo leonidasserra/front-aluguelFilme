@@ -81,8 +81,12 @@ header h1{
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  
 }
 
+.sidebar ul{
+  list-style: none;
+}
 
 .sidebar a {
   display: block;              /* Faz o link ocupar uma linha inteira */
@@ -259,6 +263,7 @@ padding-bottom: 15px;
   align-items: center;
   flex-direction: column;
   gap:10px;
+  margin-top: 80px;
 }
 
 
@@ -468,7 +473,45 @@ margin-top: 10px;
 
 
 
+
+
+/* ========================================================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 380px;
+  padding-left: 30px;
+}
+
+.pagination a {
+  cursor: pointer;
+}
+
+.pagination ul {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  /* padding: 0; */
+}
+ 
+.pagination a {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #007bff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  
+}
+
+.pagination a:hover {
+  background-color: #f0f0f0;
+}
+
 .div-back-btn{
   display: flex;
   justify-content: center;
+  padding-right: 10px;
 }
+
+
