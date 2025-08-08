@@ -514,4 +514,22 @@ margin-top: 10px;
   padding-right: 10px;
 }
 
+.confirm-btn{
+  display: flex;
+  justify-content: end;
+}
 
+.confirm-btn button{
+  height: 25px;
+  width: 90px;
+}
+
+.page-title-home{
+  display: flex;
+  justify-content: flex-start;
+  /* margin-left: 50px; espaço da sidebar */
+  margin-top: 10vh;   /* espaço do header */
+  font-size: 35px;
+  /* padding-top: 20px; */
+  
+}

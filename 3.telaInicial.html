@@ -6,7 +6,8 @@
     <title>Home</title>
 </head>
 
-<!-- Barra Superior -->
+<body>
+    <!-- Barra Superior -->
     <header class="header">
         <div class="logo">
             <h1>RentFlix</h1>
@@ -16,68 +17,65 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <ul>
-            <a href="#">Ver Clientes</a>
-             <br>
-            <a href="#">Novo Cliente</a>
-             <br>
-           
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <a href="#" id="exit-btn">Sair</a>
+            <li><a href="#">Ver Clientes</a></li>
+            <li><a href="#">Novo Cliente</a></li>
+            <li><a href="#" id="exit-btn">Sair</a></li>
         </ul>
     </div>
 
-<body>
-<h1 class="page-title">Filmes</h1>
-<div class="main-content" class="content">    
-    
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        
+        <div class="page-title-home">
+            <h1>Filmes</h1>
+        </div>    
+        <form action="4.fazerAluguel.html">
+            <div class="filmes" data-id="1">
+                <h2>Filme 1</h2>
+                <div class="inner-filme">
+                    <a href="/filmes/1" class="detalhes-btn">Ver Detalhes</a>
+                    <button type="button" class="add-filme-btn">Adicionar</button>
+                </div>
+            </div>
 
-<form action="4.fazerAluguel.html">
+            <div class="filmes" data-id="2">
+                <h2>Filme 2</h2>
+                <div class="inner-filme">
+                    <a href="/filmes/2" class="detalhes-btn">Ver Detalhes</a>
+                    <button type="button" class="add-filme-btn">Adicionar</button>
+                </div>
+            </div>
 
-    <div class="filmes" data-id="1">
-        <h2>Filme 1</h2>
-    <div class="inner-filme">
-        <a href="/filmes/1" class="detalhes-btn">Ver Detalhes</a>
-        <button type="button" class="add-filme-btn">Adicionar</button>
-    </div>
-    </div>
+            <div class="filmes" data-id="3">
+                <h2>Filme 3</h2>
+                <div class="inner-filme">
+                    <a href="/filmes/3" class="detalhes-btn">Ver Detalhes</a>
+                    <button type="button" class="add-filme-btn">Adicionar</button>
+                </div>
+            </div>
 
-    <div class="filmes" data-id="2">
-        <h2>Filme 2</h2>
-        <div class="inner-filme">
-        <a href="/filmes/2" class="detalhes-btn">Ver Detalhes</a>
-        <button type="button" class="add-filme-btn">Adicionar</button>
+            <br><br>
+            <div class="confirm-btn">
+                <button type="submit" class="login-btn">Seguinte</button>
+            </div>
+        </form>
 
-    </div>
-    </div>
+        <!-- Paginação -->
+        <nav class="pagination" aria-label="Navegação de páginas">
+            <ul>
+                <li><a href="?page=1" class="active">1</a></li>
+                <li><a href="?page=2">2</a></li>
+                <li><a href="?page=3">3</a></li>
+                <li><a href="?page=2">Próximo</a></li>
+            </ul>
+        </nav>
 
-    <div class="filmes" data-id="3">
-        <h2>Filme 3</h2>
-    <div class="inner-filme">
-        <a href="/filmes/3" class="detalhes-btn">Ver Detalhes</a>
-        <button type="button" class="add-filme-btn">Adicionar</button>
-    </div>
-
-    </div>
-</div>
-    <br><br>
-
-    <button type="submit" class="login-btn">Seguinte</button>
-
-</form>
-
-</div>
-
-
-
-
-            <br><br><br><br>
-
-            <!--  BTN de Config  -->
-            <div>
-                <form action="configuracoes.html" method="get">
+        <!-- Botão de Configurações -->
+        <!-- <div>
+            <form action="configuracoes.html" method="get">
                 <button type="submit" class="config-btn">Configurações</button>
-                </form>
-             </div>
-
+            </form>
+        </div> -->
+    </main>
 </body>
 </html>
