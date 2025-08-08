@@ -418,6 +418,7 @@ font-weight: bolder;
   align-items: center;
   gap: 240px;
   padding-bottom: 5px;
+  margin-bottom: 20pxpx;
 }
 
 .inner-aluguel p{
@@ -426,4 +427,48 @@ font-weight: bolder;
 
 .inner-aluguel a{
   text-decoration: none;
+}
+
+
+.details{
+  top:30vh;
+  background-color: white;
+  width: 500px;
+  height: 300px;
+  border-radius: 10px;
+  margin-top: 110px;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.details h1{
+  font-size: 35px;
+}
+
+
+
+.pessoaDet{
+  top:30vh;
+  background-color: white;
+  width: 500px;
+  height: 300px;
+  border-radius: 10px;
+  margin-top: 110px;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.pessoaDet p{
+margin-top: 10px;
+}
+
+.details p{
+  margin-top: 10px;
+}
+
+
+
+.div-back-btn{
+  display: flex;
+  justify-content: center;
 }
