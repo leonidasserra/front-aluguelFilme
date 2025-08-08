@@ -290,3 +290,140 @@ background-color: #5c5c5c;
 color: #070707;
 width: 100px;
 }
+
+.overlay, .confirm-box {
+    display: none;
+}
+
+.overlay.active {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.confirm-box.active {
+    display: block;
+    position: fixed;
+    align-items: center;
+    width: 30vh;
+    height: 15vh; 
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 24px;
+}
+
+.inner-confirm-box{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.inner-confirm-box button{
+
+width: 150px;
+height: 30px;
+border-radius: 9px;
+}
+
+#btnSim{
+background-color: #4DB1F8;
+color: white;
+font-weight: bolder;
+}
+
+#btnNao{
+background-color: #5c5c5c;
+font-weight: bolder;
+}
+
+.main-content-pessoas-det{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 10vh;
+  gap:20px;
+}
+.main-content-pessoas-det p{
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+.back-btn-pessoaDet{
+  position: fixed;
+  bottom: 180px;  
+  background-color: #5c5c5c;
+  color: #070707;
+  width: 200px;
+  height: 50px;
+  font-size: large;
+  font-weight: bolder;
+}
+
+.aluguel{
+
+  background-color: white;
+  width: 500px;
+  height: 100px;
+  border-radius: 10px;
+  padding-left: 10px;
+
+}
+
+.alugueis{
+  padding-top: 50px;
+}
+
+.main-content-filmesDet{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap:10px;
+  justify-content: center;
+  top: 200px
+}
+
+.main-content-filmesDet p{
+  font-size: 26px;
+  font-weight: bolder;
+}
+
+.div-back-btn-filmedet{
+  display: flex;
+  justify-content: center;
+
+}
+.div-back-btn-filmedet button{
+  font-size: large;
+  font-weight: bolder;
+  background-color: #5c5c5c;
+  color: #070707;
+  width: 200px;
+  height: 50px;
+
+}
+.inner-aluguel{
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 240px;
+  padding-bottom: 5px;
+}
+
+.inner-aluguel p{
+  font-weight: lighter;
+}
+
+.inner-aluguel a{
+  text-decoration: none;
+}

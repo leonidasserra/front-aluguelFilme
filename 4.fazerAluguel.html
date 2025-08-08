@@ -58,13 +58,15 @@
     </form>
 
     <!-- Janela de Confirmação -->
-    <div class="overlay" id="overlay"></div>
+    <div class="overlay" id="overlay">
     <div class="confirm-box" id="confirmBox">
         <p>Você tem certeza?</p>
-        <button id="btnSim">Sim</button>
-        <button id="btnNao">Não</button>
+        <div class="inner-confirm-box">
+            <button id="btnSim">Sim</button>
+            <button id="btnNao">Não</button>
+        </div>    
     </div>
-
+    </div>
     <!-- Botão de Configurações -->
     <div>
         <br><br>
@@ -74,4 +76,28 @@
     </div>
 
 </body>
+
+<script>
+    const btnConfirmar = document.querySelector('.rent-btn');
+    const overlay = document.getElementById('overlay');
+    const confirmBox = document.getElementById('confirmBox');
+    const btnSim = document.getElementById('btnSim');
+    const btnNao = document.getElementById('btnNao');
+    const form = document.querySelector('form');
+
+    btnConfirmar.addEventListener('click', function(event) {
+        event.preventDefault(); // Impede o envio automático
+        overlay.classList.add('active');
+        confirmBox.classList.add('active');
+    });
+
+    btnSim.addEventListener('click', function() {
+        form.submit(); // Agora envia o formulário
+    });
+
+    btnNao.addEventListener('click', function() {
+        overlay.classList.remove('active');
+        confirmBox.classList.remove('active');
+    });
+</script>
 </html>
