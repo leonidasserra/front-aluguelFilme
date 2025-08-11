@@ -9,13 +9,21 @@
 
 
     <!-- Sidebar -->
-    <div class="sidebar">
-        <ul>
-            <a href="#">Ver Clientes</a>
-            <a href="#">Novo Cliente</a>
-            <a href="#" id="exit-btn">Sair</a>
-        </ul>
-    </div>
+<div class="sidebar">
+    <ul>
+        <a href="3.telaInicial.html">Home</a>
+        <br>
+        <a href="5.pessoas.html">Ver Clientes</a>
+        <br>
+        <a href="2.cadastro.html">Novo Cliente</a>
+        <br>
+        <a href="6.novoFilme.html">Novo Filme</a>
+        <br>
+        <a href="javascript:history.back()">Voltar</a>
+        <br>
+        <a href="1.login.html" id="exit-btn">Sair</a>
+    </ul>
+</div>
 
     <!-- Formulário de Confirmação -->
     <form action="5.confirmarAluguel.html" method="get">    
@@ -32,17 +40,17 @@
                             <td>Gênero</td>
                             <td>Ano</td>
                             <td>Estoque</td>
-                            <td>Ações</td>
+                            <td>Adicionar</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>0</td>
-                            <td><a href="3.1.detalhesFilmes.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
+                            <td><a href="3.1.detalhesFilme-Aluguel.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
                             <td>Fantasia</td>
                             <td>2001</td>
                             <td>12</td>
-                            <td><button type="button" class="add-btn">Excluir</button></td>
+                            <td><input type="checkbox" class="checkbox" ></input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -106,5 +114,17 @@
         overlay.classList.remove('active');
         confirmBox.classList.remove('active');
     });
+
+    // Seleciona todas as checkboxes da tabela
+document.querySelectorAll('.checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const row = this.closest('tr'); // pega a <tr> onde a checkbox está
+        if (this.checked) {
+            row.classList.add('selected-row'); // adiciona cor
+        } else {
+            row.classList.remove('selected-row'); // remove cor
+        }
+    });
+});
 </script>
 </html>
