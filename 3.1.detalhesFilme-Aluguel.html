@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Detalhes do Filme</title>
+    <!-- Vincula o arquivo JavaScript externo
+    <script src="detalhes.js" defer></script>  -->
+</head>
+
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <ul>
+        <a href="#">Ver Clientes</a>
+        <br>
+        <a href="#">Novo Cliente</a>
+        <br>
+        <a href="#">Novo Filme</a>
+        <br>
+        <a href="3.telaInicial.html">Voltar</a>
+        <br>
+        <a href="#" id="exit-btn">Sair</a>
+    </ul>
+</div> <!-- fechamento adicionado da div.sidebar -->
+
+<body>
+<div class="main-content-filmesDet">
+    <form action="3.telaInicial.html">
+                <br>
+        <div class="movie-details-title">
+            <h1>Detalhes do filme</h1>
+        </div>
+        <div class="details">
+            
+            <div id="inner-movieDetails">
+           <table>
+                <thead>
+                    <tr>
+                        <td>Código</td>
+                        <td>Título</td>
+                        <td>Gênero</td>
+                        <td>Ano</td>
+                        <td>Estoque</td>
+                        <td>Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td><a href="3.1.2.detalhesFilme.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
+                        <td>Fantasia</td>
+                        <td>2001</td>
+                        <td>12</td>
+                        <td><button type="button" class="add-btn">Adicionar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+        <h2>Empréstimos Relacionados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Código</td>
+                        <td>Data de inicio</td>
+                        <td>Data de Devolução</td>
+                        <td>Valor</td>
+                        <td>Status</td>
+                        <td>Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>11/08/2025</a></td>
+                        <td>10/09/2025</td>
+                        <td>39,50</td>
+                        <td>Ativo</td>
+                        <td><button type="button" class="add-btn">Adicionar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <!-- <div class="div-back-btn-filmedet">
+            <button type="submit" class="back-btn">Voltar</button>
+        </div> fechamento adicionado da div do botão -->
+
+    </form>
+            <nav class="pagination" aria-label="Navegação de páginas">
+            <ul>
+                <li><a href="?page=1" class="active">1</a></li>
+                <li><a href="?page=2">2</a></li>
+                <li><a href="?page=3">3</a></li>
+                <li><a href="?page=2">Próximo</a></li>
+            </ul>
+        </nav>
+</div>
+</body>
+</html>

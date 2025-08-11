@@ -8,14 +8,17 @@
 
 <body>
     <!-- Barra Superior -->
-    <header class="header">
+    <!-- <header class="header">
         <div class="logo">
             <h1>RentFlix</h1>
         </div>
-    </header>
+    </header> -->
 
     <!-- Sidebar -->
     <div class="sidebar">
+        <div class="inner-sidebar">
+            <h1>Menu</h1>
+        </div>    
         <ul>
             <li><a href="#">Ver Clientes</a></li>
             <li><a href="#">Novo Cliente</a></li>
@@ -29,59 +32,62 @@
         <div class="page-title-home">
             <h1>Filmes</h1>
         </div>    
-        <form action="4.fazerAluguel.html">
-            <!-- <div class="filmes" data-id="1">
-                <h2>Filme 1</h2>
-                <div class="inner-filme">
-                    <a href="/filmes/1" class="detalhes-btn">Ver Detalhes</a>
-                    <button type="button" class="add-filme-btn">Adicionar</button>
+        <div class="home-content"></div>
+            <form action="4.fazerAluguel.html">
+                                <div class="confirm-btn">
+                    <button type="submit" class="login-btn">Seguinte</button>
                 </div>
-            </div>
-
-            <div class="filmes" data-id="2">
-                <h2>Filme 2</h2>
-                <div class="inner-filme">
-                    <a href="/filmes/2" class="detalhes-btn">Ver Detalhes</a>
-                    <button type="button" class="add-filme-btn">Adicionar</button>
+                <!-- <div class="filmes" data-id="1">
+                    <h2>Filme 1</h2>
+                    <div class="inner-filme">
+                        <a href="/filmes/1" class="detalhes-btn">Ver Detalhes</a>
+                        <button type="button" class="add-filme-btn">Adicionar</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="filmes" data-id="3">
-                <h2>Filme 3</h2>
-                <div class="inner-filme">
-                    <a href="/filmes/3" class="detalhes-btn">Ver Detalhes</a>
-                    <button type="button" class="add-filme-btn">Adicionar</button>
+                <div class="filmes" data-id="2">
+                    <h2>Filme 2</h2>
+                    <div class="inner-filme">
+                        <a href="/filmes/2" class="detalhes-btn">Ver Detalhes</a>
+                        <button type="button" class="add-filme-btn">Adicionar</button>
+                    </div>
                 </div>
-            </div> -->
 
-            <table>
-                <thead>
-                    <tr>
-                        <td>Código</td>
-                        <td>Título</td>
-                        <td>Gênero</td>
-                        <td>Ano</td>
-                        <td>Estoque</td>
-                        <td>Seleção</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>0</td>
-                        <td><a href="3.1.detalhesFilmes.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
-                        <td>Fantasia</td>
-                        <td>2001</td>
-                        <td>12</td>
-                        <td><button type="button" class="add-btn">Adicionar</button></td>
-                    </tr>
-                </tbody>
-            </table>
+                <div class="filmes" data-id="3">
+                    <h2>Filme 3</h2>
+                    <div class="inner-filme">
+                        <a href="/filmes/3" class="detalhes-btn">Ver Detalhes</a>
+                        <button type="button" class="add-filme-btn">Adicionar</button>
+                    </div>
+                </div> -->
 
-            <!-- <br><br>
-            <div class="confirm-btn">
-                <button type="submit" class="login-btn">Seguinte</button>
-            </div> -->
-        </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Código</td>
+                            <td>Título</td>
+                            <td>Gênero</td>
+                            <td>Ano</td>
+                            <td>Estoque</td>
+                            <td>Ações</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td><a href="3.1.detalhesFilmes.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
+                            <td>Fantasia</td>
+                            <td>2001</td>
+                            <td>12</td>
+                            <td><button type="button" class="add-btn">Adicionar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br><br>
+
+            </form>
+        </div>
 
         <!-- Paginação -->
         <nav class="pagination" aria-label="Navegação de páginas">

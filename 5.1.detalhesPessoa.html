@@ -30,24 +30,70 @@
     </div>
 
 <body>
-<div class="main-content-pessoas-det">    
-    <form action="3.telaInicial.html">
-    <div class="pessoa-details"> 
-        
-        <div class="details">
-            <h1 id="nomePessoaDet">Nome</h1>
-            <p>Cpf: <span id="cpfPessoaDet"></span></p>
-            <p>Nascimento: <span id="nascPessoaDet"></span></p>
-            <p>Telefone: <span id="telPessoaDet"></span></p>
-            <p>Email: <span id="emailPessoaDet"></span></p>
-        </div>
-    
+<div class="modal">
+        <div class="modalContent">
+            <h2 class="tituloModal" >Detalhes do Filme</h2>
+            <p><strong>Nome:</strong>Leônidas Serra</p>
+            <p><strong>Email:</strong> leonidas.serra@example.com</p>
+            <p><strong>Cpf:</strong> 054796363-75</p>
+            <p><strong>Telefone:</strong> 9898750078</p>
+            <p><strong>Nascimento:</strong> 06/04/2004</p>
 
-        <div>
-            <div class="div-back-btn">
-                <button type="submit" class="back-btn-pessoaDet">Voltar</button>
-            </div>    
+            <a href="5.pessoas.html">
+                <button class="buttonModal"> Voltar </button>
+            </a>
+        </div>
+</div>
+
+<div class = "background">
+        <div class="sidebar">
+    <ul>
+        <a href="#">Ver Clientes</a>
+        <br>
+        <a href="#">Novo Cliente</a>
+        <br>
+        <a href="#">Novo Filme</a>
+        <br>
+        <a href="3.telaInicial.html">Voltar</a>
+        <br>
+        <a href="#" id="exit-btn">Sair</a>
+    </ul>
     </div>
+
+            <div class="pessoa-content">
+        <h1>Pessoas</h1>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Código</td>
+                            <td>Nome</td>
+                            <td>Email</td>
+                            <td>Telefone</td>
+                            <td>Ações</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td><a href="5.1.detalhesPessoa.html">Leônidas Serra</a></td>
+                            <td>leonidas.serra@example.com</td>
+                            <td>(98)98750-0000</td>
+                            <td><button type="button" class="add-btn">XXXXX</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+
+        <!-- Paginação -->
+        <nav class="pagination" aria-label="Navegação de páginas">
+            <ul>
+                <li><a href="?page=1" class="active">1</a></li>
+                <li><a href="?page=2">2</a></li>
+                <li><a href="?page=3">3</a></li>
+                <li><a href="?page=2">Próximo</a></li>
+            </ul>
+        </nav>
 </div>
 
 </form>

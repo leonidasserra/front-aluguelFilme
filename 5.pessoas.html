@@ -7,13 +7,6 @@
 </head>
 
 <body>
-    <!-- Barra Superior -->
-    <header class="header">
-        <div class="logo">
-            <h1>RentFlix</h1>
-        </div>
-    </header>
-
     <!-- Sidebar -->
     <div class="sidebar">
         <ul>
@@ -24,36 +17,30 @@
     </div>
 
     <!-- Conteúdo Principal -->
-    <main>
+ 
+        <div class="pessoa-content">
         <h1>Pessoas</h1>
 
-        <div class="main-content-pessoas">
-            <div class="pessoas" data-id="1">
-                <h2>Pessoa 1</h2>
-                <div class="inner-pessoas">
-                    <a href="5.1.detalhesPessoa.html" class="detalhes-btn">Ver Detalhes</a>
-                </div>
-            </div>
-
-            <div class="pessoas" data-id="2">
-                <h2>Pessoa 2</h2>
-                <div class="inner-pessoas">
-                    <a href="/pessoa/2" class="detalhes-btn">Ver Detalhes</a>
-                </div>
-            </div>
-
-            <div class="pessoas" data-id="3">
-                <h2>Pessoa 3</h2>
-                <div class="inner-pessoas">
-                    <a href="/pessoa/3" class="detalhes-btn">Ver Detalhes</a>
-                </div>    
-            </div>
-
-            <div class="div-back-btn">
-                <form action="3.telaInicial.html">
-                    <button type="submit" class="back-btn">Voltar</button>
-                </form>
-            </div>     
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Código</td>
+                            <td>Nome</td>
+                            <td>Email</td>
+                            <td>Telefone</td>
+                            <td>Ações</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td><a href="5.1.detalhesPessoa.html">Leônidas Serra</a></td>
+                            <td>leonidas.serra@example.com</td>
+                            <td>(98)98750-0000</td>
+                            <td><button type="button" class="add-btn">XXXXX</button></td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
 
         <!-- Paginação -->
@@ -68,6 +55,6 @@
 
         <!-- Botão Configurações -->
 
-    </main>
+
 </body>
 </html>

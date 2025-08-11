@@ -7,12 +7,6 @@
 </head>
 <body>
 
-    <!-- Barra Superior -->
-    <header class="header">
-        <div class="logo">
-            <h1>RentFlix</h1>
-        </div>
-    </header>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -25,35 +19,48 @@
 
     <!-- Formulário de Confirmação -->
     <form action="5.confirmarAluguel.html" method="get">    
-        <div>    
-            <h1>Confirmação</h1>
+        <div class="rent-title">    
+            <h1>Confirmação do Empréstimo</h1>
         </div>  
 
         <div class="rent-main-content">
-            <div class="filmes-rent" data-id="1">
-                <h2>Filme 1</h2>
-            </div>
-
-            <div class="filmes-rent" data-id="2">
-                <h2>Filme 2</h2>
-            </div>
-
-            <div class="filmes-rent" data-id="3">
-                <h2>Filme 3</h2>
-            </div>
+            <table>
+                    <thead>
+                        <tr>
+                            <td>Código</td>
+                            <td>Título</td>
+                            <td>Gênero</td>
+                            <td>Ano</td>
+                            <td>Estoque</td>
+                            <td>Ações</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td><a href="3.1.detalhesFilmes.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
+                            <td>Fantasia</td>
+                            <td>2001</td>
+                            <td>12</td>
+                            <td><button type="button" class="add-btn">Excluir</button></td>
+                        </tr>
+                    </tbody>
+                </table>
 
             <br><br>
+            
+            <div class="make-rent">
+                <div class="section-signup-rent">
+                    <label for="pessoa">Empréstimo para: </label>
+                    <input type="text" id="pessoaAluguel" name="pessoaAluguel" required>
+                </div>
 
-            <div class="section-signup">
-                <label for="pessoa">Empréstimo para: </label>
-                <input type="text" id="pessoaAluguel" name="pessoaAluguel" required>
-            </div>
+                <br><br>
 
-            <br><br>
-
-            <div class="div-rent-btn">
-                <button type="submit" class="rent-btn">Confirmar</button>
-            </div>
+                <div class="div-rent-btn">
+                    <button type="submit" class="rent-btn">Confirmar</button>
+                </div>
+            </div>    
         </div>
     </form>
 
