@@ -813,3 +813,29 @@ input[type="checkbox"] {
 .fa-solid{
   color: red;
 }
+
+.top-page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50%;
+  width: 80%;
+  padding-left: 10%;
+}
+
+.searchbar{
+  margin-left: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.searchbar input{
+  border-radius: 8px;
+}
+
+.searchbar button{
+  border-radius: 15px;
+  background-color: white;
+}
