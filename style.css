@@ -839,3 +839,12 @@ input[type="checkbox"] {
   border-radius: 15px;
   background-color: white;
 }
+
+.exclude-btn{
+  border-width: 0px;
+  background-color: #b7d4fa;
+}
+
+.exclude-btn:hover{
+cursor: pointer;
+}
