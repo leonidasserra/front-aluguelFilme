@@ -50,7 +50,7 @@
                             <td>Fantasia</td>
                             <td>2001</td>
                             <td>12</td>
-                            <td><input type="checkbox" class="checkbox" ></input></td>
+                            <td><button type="button" class="trash-btn">🗑️</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -66,7 +66,7 @@
                 <br><br>
 
                 <div class="div-rent-btn">
-                    <button type="submit" class="rent-btn">Confirmar</button>
+                    <button type="submit" class="float-btn">Confirmar</button>
                 </div>
             </div>    
         </div>
@@ -92,39 +92,5 @@
 
 </body>
 
-<script>
-    const btnConfirmar = document.querySelector('.rent-btn');
-    const overlay = document.getElementById('overlay');
-    const confirmBox = document.getElementById('confirmBox');
-    const btnSim = document.getElementById('btnSim');
-    const btnNao = document.getElementById('btnNao');
-    const form = document.querySelector('form');
 
-    btnConfirmar.addEventListener('click', function(event) {
-        event.preventDefault(); // Impede o envio automático
-        overlay.classList.add('active');
-        confirmBox.classList.add('active');
-    });
-
-    btnSim.addEventListener('click', function() {
-        form.submit(); // Agora envia o formulário
-    });
-
-    btnNao.addEventListener('click', function() {
-        overlay.classList.remove('active');
-        confirmBox.classList.remove('active');
-    });
-
-    // Seleciona todas as checkboxes da tabela
-document.querySelectorAll('.checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        const row = this.closest('tr'); // pega a <tr> onde a checkbox está
-        if (this.checked) {
-            row.classList.add('selected-row'); // adiciona cor
-        } else {
-            row.classList.remove('selected-row'); // remove cor
-        }
-    });
-});
-</script>
 </html>

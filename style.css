@@ -778,3 +778,34 @@ input[type="checkbox"] {
   height: 100vh;
   top: 0;
 }
+
+
+.float-btn{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;              /* considera áreas seguras em celulares com notch */
+  padding: 0.9rem 1.1rem;
+  border-radius: 999px;      /* deixa redondo/oval */
+  background: #4DB1F8;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  z-index: 9999;
+  transition: transform .15s ease, box-shadow .15s ease;
+  border-color:  #4DB1F8;
+  
+}
+.float-btn:hover{ transform: translateY(-5px); box-shadow: 0 10px 22px rgba(0,0,0,.28); }
+
+.trash-btn {
+  background: none;      /* Remove cor de fundo */
+  border: none;          /* Remove borda */
+  font-size: 24px;       /* Tamanho do emoji */
+  cursor: pointer;       /* Mostra o cursor de clique */
+  padding: 4px;          /* Espaço interno */
+}
+
+.trash-btn:hover {
+  transform: scale(1.2); /* Aumenta levemente ao passar o mouse */
+}

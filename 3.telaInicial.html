@@ -39,9 +39,9 @@
         </div>    
         <div class="home-content"></div>
             <form action="4.fazerAluguel.html">
-                                <div class="confirm-btn">
-                    <button type="submit" class="login-btn">Seguinte</button>
-                </div>
+                <!-- <div class="float-btn"> -->
+                    <button type="submit" class="float-btn">Seguinte</button>
+                <!-- </div> -->
                 <!-- <div class="filmes" data-id="1">
                     <h2>Filme 1</h2>
                     <div class="inner-filme">
@@ -80,11 +80,11 @@
                     <tbody>
                         <tr>
                             <td>0</td>
-                            <td><a href="3.1.detalhesFilmes.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
+                            <td><a href="3.1.detalhesFilme-Aluguel.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
                             <td>Fantasia</td>
                             <td>2001</td>
                             <td>12</td>
-                            <td><button type="button" class="add-btn">Adicionar</button></td>
+                            <td><input type="checkbox" class="checkbox" ></input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,4 +112,38 @@
         </div> -->
     </main>
 </body>
+<script>
+  // --- bloco do modal: só ativa se existir na página ---
+  const btnConfirmar = document.querySelector('.rent-btn');
+  const overlay = document.getElementById('overlay');
+  const confirmBox = document.getElementById('confirmBox');
+  const btnSim = document.getElementById('btnSim');
+  const btnNao = document.getElementById('btnNao');
+  const form = document.querySelector('form');
+
+  if (btnConfirmar && overlay && confirmBox && btnSim && btnNao && form) {
+    btnConfirmar.addEventListener('click', function(event) {
+      event.preventDefault();
+      overlay.classList.add('active');
+      confirmBox.classList.add('active');
+    });
+
+    btnSim.addEventListener('click', function() {
+      form.submit();
+    });
+
+    btnNao.addEventListener('click', function() {
+      overlay.classList.remove('active');
+      confirmBox.classList.remove('active');
+    });
+  }
+
+  // --- checkboxes: pinta/despinta a linha ---
+  document.querySelectorAll('.checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const row = this.closest('tr');
+      row.classList.toggle('selected-row', this.checked);
+    });
+  });
+</script>
 </html>
