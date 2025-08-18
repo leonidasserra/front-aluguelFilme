@@ -45,15 +45,15 @@
                             <td>Excluir</td>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="corpo_tabela_filmes_2">
+                        <!-- <tr>
                             <td>0</td>
                             <td><a href="3.1.detalhesFilme-Aluguel.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
                             <td>Fantasia</td>
                             <td>2001</td>
                             <td>12</td>
                             <td><button type="button" class="exclude-btn"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
 
@@ -61,8 +61,8 @@
             
             <div class="make-rent">
                 <div class="section-signup-rent">
-                    <label for="pessoa">Empréstimo para: </label>
-                    <input type="text" id="pessoaAluguel" name="pessoaAluguel" required>
+                    <!-- <label for="pessoa">Empréstimo para: </label>
+                    <input type="text" id="pessoaAluguel" name="pessoaAluguel" required> -->
                 </div>
 
                 <br><br>
@@ -93,6 +93,97 @@
     </div>
 
 </body>
+<script>
+const idsSelecionados = JSON.parse(sessionStorage.getItem('filmesSelecionados'));
+const idsTratados = [];
 
+idsSelecionados.forEach(id => {
+    idsTratados.push(parseInt(id));
+});
 
+idsTratados.forEach(id => {
+    fetch(`http://localhost:8080/filme/buscar/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+
+            // Nesse caso a api retorna um objeto e não uma lista como na home
+            const filme = data;
+
+            const linha = document.createElement("tr");
+
+            const celulaId = document.createElement("td");
+            celulaId.textContent = filme.id;
+            linha.appendChild(celulaId);
+
+            const celulaTitle = document.createElement("td");
+            const linkTitle = document.createElement("a");
+            linkTitle.textContent = filme.title;
+            linkTitle.href = `3.1.detalhesFilme-Aluguel.html?id=${encodeURIComponent(filme.id)}`;
+            celulaTitle.appendChild(linkTitle);
+
+            linha.appendChild(celulaTitle);
+
+            const celulaGenero = document.createElement("td");
+            celulaGenero.textContent = filme.genero;
+            linha.appendChild(celulaGenero);
+
+            const celulaAno = document.createElement("td");
+            celulaAno.textContent = filme.ano;
+            linha.appendChild(celulaAno);
+
+            const celulaEstoque = document.createElement("td");
+            celulaEstoque.textContent = filme.quantidadeEstoque;
+            linha.appendChild(celulaEstoque);
+
+            const celulaExcludeBtn = document.createElement("td");
+            const excludeBtn = document.createElement("button");
+            excludeBtn.type = 'button';
+            excludeBtn.classList.add('exclude-btn');    // Adiciona a classe "exclude-btn"
+
+            // 4. Criar o elemento <i> (o ícone)
+            const iconeLixeira = document.createElement('i');
+
+            // 5. Adicionar as classes do Font Awesome ao ícone
+            iconeLixeira.classList.add('fa-solid', 'fa-trash'); // Adiciona as classes "fa-solid" e "fa-trash"
+
+            // 6. Montar a estrutura (aninhamento)
+            // Coloca o ícone <i> DENTRO do botão <button>
+            excludeBtn.appendChild(iconeLixeira);
+            excludeBtn.value = filme.id;
+            celulaExcludeBtn.appendChild(excludeBtn);
+            linha.appendChild(celulaExcludeBtn);
+
+            const dadosTabela = document.getElementById("corpo_tabela_filmes_2");
+            dadosTabela.appendChild(linha);
+        })
+        .catch(error => console.error('Erro ao buscar filmes:', error));
+});
+
+// const corpoTabela= document.getElementById("corpo_tabela_filmes_2");
+// corpoTabela.addEventListener('click',function(){
+//     if(event.target.matches('button')){
+
+//     }
+
+//     if(event.target.matches('button')){
+
+//     }
+
+// });
+
+const container = document.getElementsByClassName("section-signup-rent");
+
+const inputPessoaAlugar= document.createElement('input');
+inputPessoaAlugar.type='text';
+inputPessoaAlugar.id.add('pessoaAluguel');
+inputPessoaAlugar.name = 'pessoaAluguel';
+inputPessoaAlugar.required = true;
+const label = document.createElement('label');
+label.htmlFor = 'pessoaAluguel';           // o "for" deve bater com o id do input
+label.textContent = 'Empréstimo para: ';
+
+container.appendChild(inputPessoaAlugar);
+
+</script> 
 </html>

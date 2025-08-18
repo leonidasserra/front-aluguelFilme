@@ -45,7 +45,7 @@
         <div class="home-content"></div>
             <form action="4.fazerAluguel.html">
                 <!-- <div class="float-btn"> -->
-                    <button type="submit" class="float-btn">Seguinte</button>
+                    <button type="button" class="float-btn" id="next-home-btn">Seguinte</button>
                 <!-- </div> -->
                 <!-- <div class="filmes" data-id="1">
                     <h2>Filme 1</h2>
@@ -82,15 +82,15 @@
                             <td>Ações</td>
                         </tr>
                     </thead>
-                    <tbody id="filmes">
-                        <tr>
+                    <tbody id="corpo_tabela_filmes">
+                        <!-- <tr>
                             <td>0</td>
                             <td><a href="3.1.detalhesFilme-Aluguel.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
                             <td>Fantasia</td>
                             <td>2001</td>
                             <td>12</td>
                             <td><input type="checkbox" class="checkbox" ></input></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
 
@@ -118,6 +118,56 @@
     </main>
 </body>
 <script>
+
+
+  window.onload = function () {
+            fetch('http://localhost:8080/filme/listar')
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    let listaFilmes = document.getElementById("filmes");
+                    
+                    data.forEach((filme) => {
+                        const linha = document.createElement("tr");
+                        const celulaId = document.createElement("td");
+                        celulaId.textContent = filme.id;
+                        linha.appendChild(celulaId);
+
+                        const celulaTitle = document.createElement("td");
+                        celulaTitle.textContent = filme.title;
+                        linha.appendChild(celulaTitle);
+
+                        const celulaGenero = document.createElement("td");
+                        celulaGenero.textContent = filme.genero;
+                        linha.appendChild(celulaGenero);
+
+                        const celulaAno = document.createElement("td");
+                        celulaAno.textContent = filme.ano;
+                        linha.appendChild(celulaAno);
+
+                        const celulaEstoque = document.createElement("td");
+                        celulaEstoque.textContent = filme.quantidadeEstoque;
+                        linha.appendChild(celulaEstoque);
+                        
+
+                        const celulaCheckbox = document.createElement("td");
+                        const checkbox = document.createElement("input");
+                        checkbox.type = 'checkbox';
+                        checkbox.className = 'checkbox'
+                        checkbox.value = filme.id;
+                        celulaCheckbox.appendChild(checkbox);
+                        linha.appendChild(celulaCheckbox);
+
+
+                        const dadosTabela=document.getElementById("corpo_tabela_filmes");
+                        dadosTabela.appendChild(linha);
+
+                });
+            })
+            .catch(error => console.error('Erro ao buscar filmes:', error));
+        }
+
+
   // --- bloco do modal: só ativa se existir na página ---
   const btnConfirmar = document.querySelector('.rent-btn');
   const overlay = document.getElementById('overlay');
@@ -144,43 +194,47 @@
   }
 
   // --- checkboxes: pinta/despinta a linha ---
-  document.querySelectorAll('.checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-      const row = this.closest('tr');
-      row.classList.toggle('selected-row', this.checked);
+//   document.querySelectorAll('.checkbox').forEach(checkbox => {
+//     checkbox.addEventListener('change', function() {
+//       const row = this.closest('tr');
+//       row.classList.toggle('selected-row', this.checked);
+//     });
+//   });
+
+const corpoTabela = document.getElementById("corpo_tabela_filmes"); 
+
+
+corpoTabela.addEventListener('change', function(event) {
+  // Verifise oque mudou foi checkbox
+  if (event.target.matches('.checkbox')) {
+
+    const checkbox = event.target; // event.target é o checkbox específico que foi alterado
+    const row = checkbox.closest('tr');
+    row.classList.toggle('selected-row', checkbox.checked);
+  }
+});
+
+const btnAvançar = document.getElementById("next-home-btn")
+btnAvançar.addEventListener('click', function() {
+
+   const checkboxesMarcados = document.querySelectorAll('.checkbox:checked');
+
+    const idsSelecionados = [];
+
+    checkboxesMarcados.forEach(checkbox=>{
+        idsSelecionados.push(parseInt(checkbox.value));
     });
-  });
+    // 4. Verifica se o usuário selecionou pelo menos um filme
+    if (idsSelecionados.length === 0) {
+        alert('Por favor, selecione pelo menos um filme para continuar.');
+        window.reset();
+    }
 
-  window.onload = function () { 
-document.addEventListener("DOMContentLoaded", function() {
-            fetch('http://localhost:8080/filme/listar')
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data);
-                    let listaFilmes = document.getElementById("filmes");
-                    
-                    data.forEach((filme) => {
-                        const tr = document.createElement("tr");
-                        tr.value = filme.id;
-                        tr.innerHTML = `
-                    <td>${filme.id|| '-'} </td>
-                    <td>${filme.title|| '-'} </td>
-                    <td>${filme.genero|| '-'} </td>
-                    <td>${filme.ano || '-'} </td>
-                    <td>${filme.estoque || '-'} </td>
-                    <td> </td>
-                    
-                    // <td>
+    sessionStorage.setItem('filmesSelecionados', JSON.stringify(idsSelecionados));
+    window.location.href = "4.fazerAluguel.html";
+}
+);
+localStorage.clear();
 
-                    // <button class="editar">Editar</button>
-                    
-                    // <button class="btnExcluir" value= "${autor.id}">Excluir</button></td>
-                `;
-                        listaFilmes.appendChild(tr);
-
-                });
-            });
-        });
-        }
 </script>
 </html>
