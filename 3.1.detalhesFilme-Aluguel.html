@@ -49,14 +49,14 @@
                         <td>Ações</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="corpo_tabela_filmes_3">
                     <tr>
-                        <td>0</td>
+                        <!-- <td>0</td>
                         <td><a href="3.1.2.detalhesFilme.html">Senhor dos Anéis: A Sociedade do Anel</a></td>
                         <td>Fantasia</td>
                         <td>2001</td>
                         <td>12</td>
-                        <td>  </td>
+                        <td>  </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -102,4 +102,68 @@
         </nav>
 </div>
 </body>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+console.log("id_filme:",id);
+
+    fetch(`http://localhost:8080/filme/buscar/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+
+            // Nesse caso a api retorna um objeto e não uma lista como na home
+            const filme = data;
+
+            const linha = document.createElement("tr");
+
+            const celulaId = document.createElement("td");
+            celulaId.textContent = filme.id;
+            linha.appendChild(celulaId);
+
+            const celulaTitle = document.createElement("td");
+            const linkTitle = document.createElement("a");
+            linkTitle.textContent = filme.title;
+            linkTitle.href = `3.1.2.detalhesFilme.html?id=${encodeURIComponent(filme.id)}`;
+            celulaTitle.appendChild(linkTitle);
+
+            linha.appendChild(celulaTitle);
+
+            const celulaGenero = document.createElement("td");
+            celulaGenero.textContent = filme.genero;
+            linha.appendChild(celulaGenero);
+
+            const celulaAno = document.createElement("td");
+            celulaAno.textContent = filme.ano;
+            linha.appendChild(celulaAno);
+
+            const celulaEstoque = document.createElement("td");
+            celulaEstoque.textContent = filme.quantidadeEstoque;
+            linha.appendChild(celulaEstoque);
+
+            // const celulaExcludeBtn = document.createElement("td");
+            // const excludeBtn = document.createElement("button");
+            // excludeBtn.type = 'button';
+            // excludeBtn.classList.add('exclude-btn');    // Adiciona a classe "exclude-btn"
+
+            // // 4. Criar o elemento <i> (o ícone)
+            // const iconeLixeira = document.createElement('i');
+
+            // // 5. Adicionar as classes do Font Awesome ao ícone
+            // iconeLixeira.classList.add('fa-solid', 'fa-trash'); // Adiciona as classes "fa-solid" e "fa-trash"
+
+            // 6. Montar a estrutura (aninhamento)
+            // Coloca o ícone <i> DENTRO do botão <button>
+            // excludeBtn.appendChild(iconeLixeira);
+            // excludeBtn.value = filme.id;
+            // celulaExcludeBtn.appendChild(excludeBtn);
+            // linha.appendChild(celulaExcludeBtn);
+
+            const dadosTabela = document.getElementById("corpo_tabela_filmes_3");
+            dadosTabela.appendChild(linha);
+        })
+        .catch(error => console.error('Erro ao buscar filmes:', error));
+
+
+</script>
 </html>

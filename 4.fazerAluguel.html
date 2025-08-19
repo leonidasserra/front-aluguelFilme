@@ -28,7 +28,7 @@
 </div>
 
     <!-- Formulário de Confirmação -->
-    <form action="5.confirmarAluguel.html" method="get">    
+    <form method="get">    
         <div class="rent-title">    
             <h1>Confirmação do Empréstimo</h1>
         </div>  
@@ -60,11 +60,13 @@
             <br><br>
             
             <div class="make-rent">
-                <div class="section-signup-rent">
+                <div class="section-signup-rent" id="section-signup-rent">
                     <!-- <label for="pessoa">Empréstimo para: </label>
                     <input type="text" id="pessoaAluguel" name="pessoaAluguel" required> -->
-                </div>
-
+                
+                  <br><br>
+                <table id="table_busca_pessoas_alugueis"></table>
+            </div>
                 <br><br>
 
                 <div class="div-rent-btn">
@@ -92,98 +94,211 @@
         </form>
     </div>
 
+    <script>
+    const idsSelecionados = JSON.parse(sessionStorage.getItem('filmesSelecionados') || '[]'); 
+    // ALTERAÇÃO: adicionado fallback '[]' para evitar erro se a chave não existir.
+
+    const idsTratados = [];
+    idsSelecionados.forEach(id => {
+        idsTratados.push(parseInt(id));
+    });
+
+    idsTratados.forEach(id => {
+        fetch(`http://localhost:8080/filme/buscar/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const filme = data;
+
+                const linha = document.createElement("tr");
+
+                const celulaId = document.createElement("td");
+                celulaId.textContent = filme.id;
+                linha.appendChild(celulaId);
+
+                const celulaTitle = document.createElement("td");
+                const linkTitle = document.createElement("a");
+                linkTitle.textContent = filme.title;
+                linkTitle.href = `3.1.detalhesFilme-Aluguel.html?id=${encodeURIComponent(filme.id)}`;
+                celulaTitle.appendChild(linkTitle);
+                linha.appendChild(celulaTitle);
+
+                const celulaGenero = document.createElement("td");
+                celulaGenero.textContent = filme.genero;
+                linha.appendChild(celulaGenero);
+
+                const celulaAno = document.createElement("td");
+                celulaAno.textContent = filme.ano;
+                linha.appendChild(celulaAno);
+
+                const celulaEstoque = document.createElement("td");
+                celulaEstoque.textContent = filme.quantidadeEstoque;
+                linha.appendChild(celulaEstoque);
+
+                const celulaExcludeBtn = document.createElement("td");
+                const excludeBtn = document.createElement("button");
+                excludeBtn.type = 'button';
+                // (deixei o id repetido como estava; recomendável usar só classe)
+                excludeBtn.id = 'exc-button';
+                excludeBtn.classList.add('exclude-btn');
+                const iconeLixeira = document.createElement('i');
+                iconeLixeira.classList.add('fa-solid', 'fa-trash');
+                excludeBtn.appendChild(iconeLixeira);
+                excludeBtn.value = filme.id;
+                celulaExcludeBtn.appendChild(excludeBtn);
+                linha.appendChild(celulaExcludeBtn);
+
+                const dadosTabela = document.getElementById("corpo_tabela_filmes_2");
+                dadosTabela.appendChild(linha);
+            })
+            .catch(error => console.error('Erro ao buscar filmes:', error));
+    });
+
+    const corpoTabela = document.getElementById("corpo_tabela_filmes_2");
+    corpoTabela.addEventListener('click', function(e) {
+        // (mantive sua lógica; recomendável usar closest('button') e closest('tr'))
+        if (e.target.matches('i')) {
+            const button = e.target.closest('button');
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    });
+
+    const container = document.getElementById("section-signup-rent");
+
+    const inputPessoaAlugar = document.createElement('input');
+    inputPessoaAlugar.type = 'text';
+    inputPessoaAlugar.id = 'pessoaAluguel';
+    inputPessoaAlugar.name = 'pessoaAluguel';
+    inputPessoaAlugar.required = true;
+    const label = document.createElement('label');
+    label.htmlFor = 'pessoaAluguel';
+    label.textContent = 'Empréstimo para: ';
+
+    container.appendChild(label);
+    container.appendChild(inputPessoaAlugar);
+
+    // ====== TABELA DE PESSOAS ======
+
+    // ALTERAÇÃO: criar o THEAD uma única vez, fora do fetch.
+    const table = document.getElementById("table_busca_pessoas_alugueis");
+    const tableHead = document.createElement('thead');
+    const tableRow = document.createElement('tr');
+
+    const thId = document.createElement('th');
+    thId.textContent = "Código";
+    tableRow.appendChild(thId);    
+
+    const thNome = document.createElement('th');
+    thNome.textContent = "Nome";
+    tableRow.appendChild(thNome);        
+
+    const thCpf = document.createElement('th');
+    thCpf.textContent = "CPF";    
+    tableRow.appendChild(thCpf);        
+
+    const thActions = document.createElement('th');
+    thActions.textContent = "Ações";
+    tableRow.appendChild(thActions);        
+
+    tableHead.appendChild(tableRow);
+    table.appendChild(tableHead);
+
+    // ALTERAÇÃO: criar UM ÚNICO <tbody> e anexar à tabela.
+    const corpoTabelaPessoas = document.createElement("tbody");
+    corpoTabelaPessoas.id = 'tbody_busca_pessoas'; // id para limpeza posterior
+    table.appendChild(corpoTabelaPessoas); // <== efetivamente anexa o tbody à tabela
+
+    // ALTERAÇÃO: função para buscar pessoas e preencher a tabela (em vez de buscar imediatamente com input vazio).
+    function buscarPessoas(query) {
+        // ALTERAÇÃO: limpar o corpo antes de nova busca
+        corpoTabelaPessoas.replaceChildren();
+
+        // Estado "carregando"
+        const carregando = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 4;
+        td.textContent = 'Carregando...';
+        carregando.appendChild(td);
+        corpoTabelaPessoas.appendChild(carregando);
+
+        fetch(`http://localhost:8080/pessoa/buscar?name=${encodeURIComponent(query)}`)
+            .then((response) => response.json())
+            .then((data) => {
+                // limpar estado "carregando"
+                corpoTabelaPessoas.replaceChildren();
+
+                const pessoas = data || [];
+                if (pessoas.length === 0) {
+                    const vazio = document.createElement('tr');
+                    const tdVazio = document.createElement('td');
+                    tdVazio.colSpan = 4;
+                    tdVazio.textContent = 'Nenhum resultado';
+                    vazio.appendChild(tdVazio);
+                    corpoTabelaPessoas.appendChild(vazio);
+                    return;
+                }
+
+                pessoas.forEach(pessoa => {
+                    const linha = document.createElement("tr");
+
+                    const celulaId = document.createElement("td");
+                    celulaId.textContent = pessoa.id;
+                    linha.appendChild(celulaId);
+
+                    const celulaName = document.createElement("td");
+                    celulaName.textContent = pessoa.name;
+                    linha.appendChild(celulaName);
+
+                    const celulaCpf = document.createElement("td");
+                    celulaCpf.textContent = pessoa.cpf;
+                    linha.appendChild(celulaCpf);
+
+                    const celulaRadio = document.createElement("td");
+                    const radio = document.createElement("input");
+                    radio.type = 'radio';
+                    radio.name = 'pessoaID'; // radios no mesmo grupo
+                    radio.className = 'radio';
+                    radio.value = pessoa.id;
+                    celulaRadio.appendChild(radio);
+                    linha.appendChild(celulaRadio);
+
+                    corpoTabelaPessoas.appendChild(linha);
+                });
+            })
+            .catch((err) => {
+                corpoTabelaPessoas.replaceChildren();
+                const erro = document.createElement('tr');
+                const tdErro = document.createElement('td');
+                tdErro.colSpan = 4;
+                tdErro.textContent = 'Erro ao buscar pessoas';
+                erro.appendChild(tdErro);
+                corpoTabelaPessoas.appendChild(erro);
+                console.error(err);
+            });
+    }
+
+    // ALTERAÇÃO: debouce simples para evitar busca a cada tecla (opcional, mas melhora UX).
+    let debounceTimer = null;
+    inputPessoaAlugar.addEventListener('input', () => {
+        const q = inputPessoaAlugar.value.trim();
+        // mínimo de 2 caracteres para buscar
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            if (q.length >= 2) {
+                buscarPessoas(q);
+            } else {
+                // limpa resultados se apagar o termo
+                corpoTabelaPessoas.replaceChildren();
+            }
+        }, 300);
+    });
+
+    // ALTERAÇÃO: ao voltar via histórico (bfcache), limpar SOMENTE o tbody (mantém thead).
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            document.getElementById('tbody_busca_pessoas')?.replaceChildren();
+        }
+    });
+    </script>
 </body>
-<script>
-const idsSelecionados = JSON.parse(sessionStorage.getItem('filmesSelecionados'));
-const idsTratados = [];
-
-idsSelecionados.forEach(id => {
-    idsTratados.push(parseInt(id));
-});
-
-idsTratados.forEach(id => {
-    fetch(`http://localhost:8080/filme/buscar/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-
-            // Nesse caso a api retorna um objeto e não uma lista como na home
-            const filme = data;
-
-            const linha = document.createElement("tr");
-
-            const celulaId = document.createElement("td");
-            celulaId.textContent = filme.id;
-            linha.appendChild(celulaId);
-
-            const celulaTitle = document.createElement("td");
-            const linkTitle = document.createElement("a");
-            linkTitle.textContent = filme.title;
-            linkTitle.href = `3.1.detalhesFilme-Aluguel.html?id=${encodeURIComponent(filme.id)}`;
-            celulaTitle.appendChild(linkTitle);
-
-            linha.appendChild(celulaTitle);
-
-            const celulaGenero = document.createElement("td");
-            celulaGenero.textContent = filme.genero;
-            linha.appendChild(celulaGenero);
-
-            const celulaAno = document.createElement("td");
-            celulaAno.textContent = filme.ano;
-            linha.appendChild(celulaAno);
-
-            const celulaEstoque = document.createElement("td");
-            celulaEstoque.textContent = filme.quantidadeEstoque;
-            linha.appendChild(celulaEstoque);
-
-            const celulaExcludeBtn = document.createElement("td");
-            const excludeBtn = document.createElement("button");
-            excludeBtn.type = 'button';
-            excludeBtn.classList.add('exclude-btn');    // Adiciona a classe "exclude-btn"
-
-            // 4. Criar o elemento <i> (o ícone)
-            const iconeLixeira = document.createElement('i');
-
-            // 5. Adicionar as classes do Font Awesome ao ícone
-            iconeLixeira.classList.add('fa-solid', 'fa-trash'); // Adiciona as classes "fa-solid" e "fa-trash"
-
-            // 6. Montar a estrutura (aninhamento)
-            // Coloca o ícone <i> DENTRO do botão <button>
-            excludeBtn.appendChild(iconeLixeira);
-            excludeBtn.value = filme.id;
-            celulaExcludeBtn.appendChild(excludeBtn);
-            linha.appendChild(celulaExcludeBtn);
-
-            const dadosTabela = document.getElementById("corpo_tabela_filmes_2");
-            dadosTabela.appendChild(linha);
-        })
-        .catch(error => console.error('Erro ao buscar filmes:', error));
-});
-
-// const corpoTabela= document.getElementById("corpo_tabela_filmes_2");
-// corpoTabela.addEventListener('click',function(){
-//     if(event.target.matches('button')){
-
-//     }
-
-//     if(event.target.matches('button')){
-
-//     }
-
-// });
-
-const container = document.getElementsByClassName("section-signup-rent");
-
-const inputPessoaAlugar= document.createElement('input');
-inputPessoaAlugar.type='text';
-inputPessoaAlugar.id.add('pessoaAluguel');
-inputPessoaAlugar.name = 'pessoaAluguel';
-inputPessoaAlugar.required = true;
-const label = document.createElement('label');
-label.htmlFor = 'pessoaAluguel';           // o "for" deve bater com o id do input
-label.textContent = 'Empréstimo para: ';
-
-container.appendChild(inputPessoaAlugar);
-
-</script> 
 </html>
