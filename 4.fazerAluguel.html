@@ -260,6 +260,11 @@
                     radio.className = 'radio';
                     radio.value = pessoa.id;
                     celulaRadio.appendChild(radio);
+                    //================================================================
+                    
+                    //FALTA SALVAR A PESSOA EM SESSION STORAGE E FINALIZAR O ALUGUEL
+                    
+                    //================================================================
                     linha.appendChild(celulaRadio);
 
                     corpoTabelaPessoas.appendChild(linha);
@@ -277,7 +282,7 @@
             });
     }
 
-    // ALTERAÇÃO: debouce simples para evitar busca a cada tecla (opcional, mas melhora UX).
+    // Debouce simples para evitar busca a cada tecla
     let debounceTimer = null;
     inputPessoaAlugar.addEventListener('input', () => {
         const q = inputPessoaAlugar.value.trim();
@@ -293,7 +298,7 @@
         }, 300);
     });
 
-    // ALTERAÇÃO: ao voltar via histórico (bfcache), limpar SOMENTE o tbody (mantém thead).
+    //Ao voltar via histórico (bfcache), limpar SOMENTE o tbody (mantém thead).
     window.addEventListener('pageshow', (e) => {
         if (e.persisted) {
             document.getElementById('tbody_busca_pessoas')?.replaceChildren();
