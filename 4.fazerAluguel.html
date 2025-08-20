@@ -63,14 +63,14 @@
                 <div class="section-signup-rent" id="section-signup-rent">
                     <!-- <label for="pessoa">Empréstimo para: </label>
                     <input type="text" id="pessoaAluguel" name="pessoaAluguel" required> -->
-                
-                  <br><br>
+                </div>
+                  <!-- <br> -->
                 <table id="table_busca_pessoas_alugueis"></table>
             </div>
                 <br><br>
 
                 <div class="div-rent-btn">
-                    <button type="submit" class="float-btn">Confirmar</button>
+                    <button type="submit"  id="confirm-rent-btn" class="float-btn">Confirmar</button>
                 </div>
             </div>    
         </div>
@@ -98,7 +98,7 @@
     const idsSelecionados = JSON.parse(sessionStorage.getItem('filmesSelecionados') || '[]'); 
     // ALTERAÇÃO: adicionado fallback '[]' para evitar erro se a chave não existir.
 
-    const idsTratados = [];
+    let idsTratados = [];
     idsSelecionados.forEach(id => {
         idsTratados.push(parseInt(id));
     });
@@ -137,7 +137,7 @@
                 const celulaExcludeBtn = document.createElement("td");
                 const excludeBtn = document.createElement("button");
                 excludeBtn.type = 'button';
-                // (deixei o id repetido como estava; recomendável usar só classe)
+                
                 excludeBtn.id = 'exc-button';
                 excludeBtn.classList.add('exclude-btn');
                 const iconeLixeira = document.createElement('i');
@@ -155,11 +155,15 @@
 
     const corpoTabela = document.getElementById("corpo_tabela_filmes_2");
     corpoTabela.addEventListener('click', function(e) {
-        // (mantive sua lógica; recomendável usar closest('button') e closest('tr'))
+        // Daria pra adicionar closest('tr')) tbm
         if (e.target.matches('i')) {
             const button = e.target.closest('button');
             const row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
+            const idExcluir=parseInt(button.value);
+            console.log("id a ser excliudo: ",idExcluir);
+            idsTratados = idsTratados.filter(n => n !== idExcluir);//Exclusão do id de filme após click na lixeira
+            console.log("ids restantes: ",idsTratados);
         }
     });
 
@@ -179,7 +183,7 @@
 
     // ====== TABELA DE PESSOAS ======
 
-    // ALTERAÇÃO: criar o THEAD uma única vez, fora do fetch.
+    // THEAD criado uma única vez, fora do fetch.
     const table = document.getElementById("table_busca_pessoas_alugueis");
     const tableHead = document.createElement('thead');
     const tableRow = document.createElement('tr');
@@ -203,10 +207,10 @@
     tableHead.appendChild(tableRow);
     table.appendChild(tableHead);
 
-    // ALTERAÇÃO: criar UM ÚNICO <tbody> e anexar à tabela.
+    // Criar UM ÚNICO <tbody>
     const corpoTabelaPessoas = document.createElement("tbody");
     corpoTabelaPessoas.id = 'tbody_busca_pessoas'; // id para limpeza posterior
-    table.appendChild(corpoTabelaPessoas); // <== efetivamente anexa o tbody à tabela
+    table.appendChild(corpoTabelaPessoas);
 
     // ALTERAÇÃO: função para buscar pessoas e preencher a tabela (em vez de buscar imediatamente com input vazio).
     function buscarPessoas(query) {
@@ -304,6 +308,82 @@
             document.getElementById('tbody_busca_pessoas')?.replaceChildren();
         }
     });
+
+    
+    corpoTabelaPessoas.addEventListener('change',function(event){
+        if(event.target.matches('.radio')){
+            const radio=event.target;
+            const idPessoaSelecionada=radio.value;
+            console.log(idPessoaSelecionada);
+        }
+    });
+
+    const confirmFloatBtn = document.getElementById("confirm-rent-btn");
+    const confirmRentBtn = document.getElementById("btnSim");
+    const closeConfirmRentBtn = document.getElementById("btnNao");
+    const overlay= document.getElementById("overlay");
+    const confirmBox=document.getElementById("confirmBox");
+
+    confirmFloatBtn.addEventListener('click',function(event){
+        overlay.classList.add('active');
+        confirmBox.classList.add('active');
+    });
+
+    closeConfirmRentBtn.addEventListener('click',function(event){
+        overlay.classList.remove('active'); 
+        confirmBox.classList.remove('active'); 
+    });
+
+    //Click fora tambem faz a janela sumir
+    // overlay.addEventListener('click',function(event){
+    //     if(!overlay.contains(event.target)){
+    //         overlay.classList.remove('active');
+    //         confirmBox.classList.remove('active');
+    //     }
+    // });
+    
+    confirmRentBtn.addEventListener('click',function(event){
+        // sessionStorage.setItem('pessoaSelecionada', idPessoaSelecionada);
+        // sessionStorage.setItem('filmesSelecionados', idsTratados);
+        const filmesFormatados = idsTratados.map(id =>({id: id}));
+        const today = new Date();
+        const year = String(today.getFullYear());
+        const month = String(today.getMonth() + 1); 
+        const day = String(today.getDate()); 
+        today = year+'-'+month+'-'+day;
+        const dataToSend = {
+            valorAluguel: 12*idsTratados.length(),
+            dataAluguel: "2025-07-31",
+            dataAluguel: today,
+            pessoa:{
+                id: idPessoaSelecionada
+            },
+            filmes: filmesFormatados
+        };
+
+        const jsonRequisicao = JSON.stringify(dataToSend,null,2);
+
+        fetch('http://localhost:8080/aluguel/criar',{
+            method: 'POST',
+            headers: {
+                   'Content-Type': 'application/json' 
+            },
+            body:jsonRequisicao
+        })    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    })
+
+
+
+    });
+
+
     </script>
 </body>
 </html>

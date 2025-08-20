@@ -848,3 +848,12 @@ input[type="checkbox"] {
 .exclude-btn:hover{
 cursor: pointer;
 }
+
+input[type="radio"]{
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+
+#pessoAluguel{
+  width: 100%;
+}
