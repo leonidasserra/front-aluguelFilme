@@ -264,11 +264,6 @@
                     radio.className = 'radio';
                     radio.value = pessoa.id;
                     celulaRadio.appendChild(radio);
-                    //================================================================
-                    
-                    //FALTA SALVAR A PESSOA EM SESSION STORAGE E FINALIZAR O ALUGUEL
-                    
-                    //================================================================
                     linha.appendChild(celulaRadio);
 
                     corpoTabelaPessoas.appendChild(linha);
@@ -386,7 +381,7 @@
     })
     .then(data => {
         console.log('Success:', data);
-    })
+    }).then(alert("Empréstimo Feito com Sucesso!")).then(window.location.href='3.telaInicial.html')
 
 
 

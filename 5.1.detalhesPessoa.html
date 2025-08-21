@@ -31,17 +31,18 @@
 
 <body>
 <div class="modal">
-        <div class="modalContent">
-            <h2 class="tituloModal" >Detalhes do Filme</h2>
-            <p><strong>Nome:</strong>Leônidas Serra</p>
+        <div class="modalContent" id="modalPessoaDet">
+            <h2 class="tituloModal" >Detalhes da Pessoa</h2>
+            <!-- <p><strong>Nome:</strong>Leônidas Serra</p>
             <p><strong>Email:</strong> leonidas.serra@example.com</p>
             <p><strong>Cpf:</strong> 054796363-75</p>
             <p><strong>Telefone:</strong> 9898750078</p>
-            <p><strong>Nascimento:</strong> 06/04/2004</p>
-
-            <a href="5.pessoas.html">
+            <p><strong>Nascimento:</strong> 06/04/2004</p> -->
+            
+            
+            <!-- <a href="5.pessoas.html">
                 <button class="buttonModal"> Voltar </button>
-            </a>
+            </a></div> -->
         </div>
 </div>
 
@@ -63,24 +64,24 @@
             <div class="pessoa-content">
         <h1>Pessoas</h1>
 
-                <table>
+                  <table>
                     <thead>
                         <tr>
                             <td>Código</td>
                             <td>Nome</td>
                             <td>Email</td>
                             <td>Telefone</td>
-                            <td>Ações</td>
+                            <!-- <td>Ações</td> -->
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="lista-pessoas">
+                        <!-- <tr>
                             <td>0</td>
                             <td><a href="5.1.detalhesPessoa.html">Leônidas Serra</a></td>
                             <td>leonidas.serra@example.com</td>
-                            <td>(98)98750-0000</td>
-                            <td><button type="button" class="add-btn">XXXXX</button></td>
-                        </tr>
+                            <td>(98)98750-0000</td> -->
+                            <!-- <td><button type="button" href="5.1.detalhesPessoa.html" class="add-btn">Detalhes</button></td> -->
+                        <!-- </tr> -->
                     </tbody>
                 </table>
         </div>
@@ -97,5 +98,153 @@
 </div>
 
 </form>
+<script>
+    //Carregar fundo da página anterior
+    window.onload = function () {
+            fetch('http://localhost:8080/pessoa/listar')
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    
+                    data.forEach((pessoa) => {
+                        const linha = document.createElement("tr");
+                        const celulaId = document.createElement("td");
+                        celulaId.textContent = pessoa.id;
+                        linha.appendChild(celulaId);
+
+                        const celulaName = document.createElement("td");
+                        const linkPessoaName = document.createElement("a");
+                        linkPessoaName.textContent = pessoa.name;
+                        linkPessoaName.href = `5.1.detalhesPessoa.html?id=${encodeURIComponent(pessoa.id)}`;
+                        celulaName.appendChild(linkPessoaName);
+      
+                        linha.appendChild(celulaName);
+
+                        const celulaEmail = document.createElement("td");
+                        celulaEmail.textContent = pessoa.email;
+                        linha.appendChild(celulaEmail);
+
+                        const celulaTelefone = document.createElement("td");
+                        celulaTelefone.textContent = pessoa.telefone;
+                        linha.appendChild(celulaTelefone);
+
+
+                        // const celulaNasc = document.createElement("td");
+                        // celulaNasc.textContent = pessoa.nascimento;
+                        // linha.appendChild(celulaNasc);
+
+                        // const celulaCpf = document.createElement("td");
+                        // celulaCpf.textContent = pessoa.cpf;
+                        // linha.appendChild(celulaCpf);
+                    
+
+
+                        const dadosTabela=document.getElementById("lista-pessoas");
+                        dadosTabela.appendChild(linha);
+
+                });
+            })
+            .catch(error => console.error('Erro ao buscar filmes:', error));
+        }
+    
+    //==============================================================================
+
+    // Modal Dinâmico
+
+    const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+console.log("id_pessoa:",id);
+
+    fetch(`http://localhost:8080/pessoa/buscar/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+
+            // Nesse caso a api retorna um objeto e não uma lista como na home
+            const pessoa = data;
+            console.log(pessoa.nascimento);
+            const modal = document.getElementById("modalPessoaDet");
+
+            const celulaId = document.createElement("p");
+            celulaId.innerHTML ='<strong>ID: </strong>' + pessoa.id;
+            modal.appendChild(celulaId);
+
+            const celulaName = document.createElement("p");
+            // const linkTitle = document.createElement("a");
+            celulaName.innerHTML ="<strong>Nome: </strong>" + pessoa.name;
+            // linkTitle.href = `3.1.2.detalhesFilme.html?id=${encodeURIComponent(filme.id)}`;
+            // celulaTitle.appendChild(linkTitle);
+
+            modal.appendChild(celulaName);
+
+
+            const celulaEmail = document.createElement("p");
+            celulaEmail.innerHTML ='<strong>Email: </strong>' + pessoa.email;
+            modal.appendChild(celulaEmail);
+
+            const celulaCpf = document.createElement("p");
+            celulaCpf.innerHTML ='<strong>Cpf: </strong>' + pessoa.cpf;
+            modal.appendChild(celulaCpf);
+       
+            const celulaTel = document.createElement("p");
+            celulaTel.innerHTML ='<strong>Telefone: </strong>' + pessoa.telefone;
+            modal.appendChild(celulaTel);
+       
+            //Nascimento com tratamneto de Java LocalDate para exibição normal
+            const celulaNasc = document.createElement("p");
+            const nascimentoRaw=String(pessoa.nascimento);
+            console.log(nascimentoRaw);
+            const ano= nascimentoRaw.slice(0,4);
+            console.log(ano);
+            const mes= nascimentoRaw.slice(5,7);
+            console.log(mes);
+            const dia= nascimentoRaw.slice(8,10);
+            console.log(dia);
+            const nascimentoTratado=dia+'/'+mes+'/'+ano;
+            celulaNasc.innerHTML ='<strong>Nascimento: </strong>' + nascimentoTratado;
+            modal.appendChild(celulaNasc);
+
+            // const celulaDiretor = document.createElement("p");
+            // celulaDiretor.innerHTML ='<strong>Diretor: </strong>' + filme.diretor;
+            // modal.appendChild(celulaDiretor);
+
+            // const celulaGenero = document.createElement("p");
+            // celulaGenero.innerHTML ="<strong>Gênero: </strong>" + filme.genero;
+            // modal.appendChild(celulaGenero);
+
+            // const celulaAno = document.createElement("p");
+            // celulaAno.innerHTML = "<strong>Ano: </strong>" + filme.ano;
+            // modal.appendChild(celulaAno);
+
+            // const celulaEstoque = document.createElement("p");
+            // celulaEstoque.innerHTML = "<strong>Estoque: </strong>" + filme.quantidadeEstoque;
+            // modal.appendChild(celulaEstoque);
+
+            // const celulaClassificao = document.createElement("p");
+            // celulaClassificao.innerHTML = "<strong>Classificação: </strong>" + filme.classificacao;
+            // modal.appendChild(celulaClassificao);
+
+            // const celulaDuracao = document.createElement("p");
+            // celulaDuracao.innerHTML = "<strong>Estoque: </strong>" + filme.duracao;
+            // modal.appendChild(celulaDuracao);
+
+            // const celulaDescrição = document.createElement("p");
+            // celulaDescrição.innerHTML = '<strong>Descrição:</strong>' + filme.sinopse;
+            // modal.appendChild(celulaDescrição);
+
+
+            // const dadosTabela = document.getElementById("corpo_tabela_filmes_3");
+            // dadosTabela.appendChild(modal);
+        })
+        .catch(error => console.error('Erro ao buscar filmes:', error));
+
+        window.addEventListener('click',function(e){
+            if(!document.getElementById('modalPessoaDet').contains(e.target)){
+                window.history.back();
+                // event.stopPropagation(); //irrelevante pro cenário (só tem um unico listener)
+        }
+    });
+
+</script>
 </body>
 </html>

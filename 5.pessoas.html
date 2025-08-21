@@ -46,14 +46,14 @@
                             <!-- <td>Ações</td> -->
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="lista-pessoas">
+                        <!-- <tr>
                             <td>0</td>
                             <td><a href="5.1.detalhesPessoa.html">Leônidas Serra</a></td>
                             <td>leonidas.serra@example.com</td>
-                            <td>(98)98750-0000</td>
+                            <td>(98)98750-0000</td> -->
                             <!-- <td><button type="button" href="5.1.detalhesPessoa.html" class="add-btn">Detalhes</button></td> -->
-                        </tr>
+                        <!-- </tr> -->
                     </tbody>
                 </table>
         </div>
@@ -70,6 +70,57 @@
 
         <!-- Botão Configurações -->
 
+<script>
 
+window.onload = function () {
+            fetch('http://localhost:8080/pessoa/listar')
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    
+                    data.forEach((pessoa) => {
+                        const linha = document.createElement("tr");
+                        const celulaId = document.createElement("td");
+                        celulaId.textContent = pessoa.id;
+                        linha.appendChild(celulaId);
+
+                        const celulaName = document.createElement("td");
+                        const linkPessoaName = document.createElement("a");
+                        linkPessoaName.textContent = pessoa.name;
+                        linkPessoaName.href = `5.1.detalhesPessoa.html?id=${encodeURIComponent(pessoa.id)}`;
+                        celulaName.appendChild(linkPessoaName);
+      
+                        linha.appendChild(celulaName);
+
+                        const celulaEmail = document.createElement("td");
+                        celulaEmail.textContent = pessoa.email;
+                        linha.appendChild(celulaEmail);
+
+                        const celulaTelefone = document.createElement("td");
+                        celulaTelefone.textContent = pessoa.telefone;
+                        linha.appendChild(celulaTelefone);
+
+
+                        // const celulaNasc = document.createElement("td");
+                        // celulaNasc.textContent = pessoa.nascimento;
+                        // linha.appendChild(celulaNasc);
+
+                        // const celulaCpf = document.createElement("td");
+                        // celulaCpf.textContent = pessoa.cpf;
+                        // linha.appendChild(celulaCpf);
+                    
+
+
+                        const dadosTabela=document.getElementById("lista-pessoas");
+                        dadosTabela.appendChild(linha);
+
+                });
+            })
+            .catch(error => console.error('Erro ao buscar filmes:', error));
+        }
+
+
+
+</script>
 </body>
 </html>

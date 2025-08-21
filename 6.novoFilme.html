@@ -103,7 +103,7 @@
 
           <!-- ações -->
           <div class="form-actions">
-            <button type="submit" class="add-btn">Salvar</button>
+            <button type="button" class="add-btn" id="saveMovieBtn">Salvar</button>
             <!-- <a href="listar-filmes.html" class="back-btn" role="button">Cancelar</a> -->
           </div>
         </form>
@@ -112,4 +112,56 @@
 
 
 </body>
+<script>
+  //Get dos inputs
+const saveBtn=document.getElementById("saveMovieBtn");
+saveBtn.addEventListener('click',()=>{
+ let titulo = document.getElementById("titulo").value.trim(); 
+ let genero = document.getElementById("genero").value; 
+ let ano = document.getElementById("ano").value; 
+ let duracao = document.getElementById("duracaoMin").value; 
+ let classificacao = document.getElementById("classificacao").value; 
+ let diretor = document.getElementById("diretor").value.trim(); 
+ let descricao = document.getElementById("descricao").value.trim(); 
+ let estoque = document.getElementById("quantidadeEstoque").value; 
+
+
+
+ console.log(genero);
+ console.log(ano);
+ console.log(duracao);
+requisicao={
+  title: titulo,
+  ano: ano,
+  diretor: diretor,
+  quantidadeEstoque: estoque,
+  classificacao: classificacao,
+  sinopse: descricao,
+  duracao: duracao,
+  genero: genero
+}
+
+requisicaoJson=JSON.stringify(requisicao,null,2);
+console.log(requisicaoJson);
+ fetch('http://localhost:8080/filme/criar',{
+  method:'POST',
+  headers:{
+  'Content-Type':  "application/json"
+  },
+  body: requisicaoJson
+ })
+ .then(response =>{
+if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+ })
+ .then(data=>{
+  console.log("sucesso:" + data);
+})
+
+ });
+
+ 
+</script>
 </html>

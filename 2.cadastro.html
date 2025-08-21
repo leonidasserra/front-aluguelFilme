@@ -58,6 +58,13 @@
                 </div>
                 
                     <br><br>   
+               
+                    <div class="section-signup">
+                    <label for="email">Email</label>
+                    <input type="email" id="emailCad" name="emailCad" required>
+                </div>
+                
+                    <br><br>   
                 
 
                 <div class="section-signup">
@@ -68,7 +75,7 @@
                 <br><br> 
 
                 <div class="signup-btn">
-                    <button type="submit" class="login-btn" id="signup-btn">Cadastrar</button>
+                    <button type="button" class="login-btn" id="signup-btn">Cadastrar</button>
                 </div>
         </div>        
     </div>            
@@ -76,5 +83,62 @@
 
             <br><br> 
            
+<script>
+
+
+
+ const signupBtn= document.getElementById("signup-btn");
+ 
+signupBtn.addEventListener('click',()=>{
+
+ let nome= document.getElementById("nomeCad").value.trim();   
+ let cpf= document.getElementById("cpfCad").value;   
+ let numero= document.getElementById("numeroCad").value;   
+ let nascimento= document.getElementById("nascCad").value;
+ let email= document.getElementById("emailCad").value;
+
+//N tem necessidade de tratamento de data aqui(HTML ja entrega em LOCALDATE)
+//  nascimentoRaw=String(nascimento);
+//  const dia = nascimentoRaw.slice(0,2);
+//  const mes = nascimentoRaw.slice(3,5);
+//  const ano = nascimentoRaw.slice(6,9);
+
+//  console.log(nascimento);
+//  console.log(dia);
+//  console.log(mes);
+//  console.log(ano);
+
+requisicao = {
+    name: nome,
+    telefone: numero,
+    email: email,
+    cpf: cpf,
+    nascimento: nascimento
+}
+
+const requisicaoJson = JSON.stringify(requisicao,null,2);
+
+fetch('http://localhost:8080/pessoa/criar',{
+            method: 'POST',
+            headers: {
+                   'Content-Type': 'application/json' 
+            },
+            body:requisicaoJson
+        })    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    }).then(alert("Pessoa cadastrada com Sucesso!"))
+    .then(window.location.href='3.telaInicial.html')
+
+
+});
+
+ 
+</script>            
 </body>
 </html>
