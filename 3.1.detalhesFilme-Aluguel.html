@@ -70,16 +70,18 @@
                         <td>Data de Devolução</td>
                         <td>Valor</td>
                         <td>Status</td>
+                        <td>Cliente</td>
                         <td>Ações</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="lista-emprestimos-relacionados">
                     <tr>
                         <td>0</td>
                         <td>11/08/2025</a></td>
                         <td>10/09/2025</td>
                         <td>39,50</td>
                         <td>Ativo</td>
+                        <td></td>
                         <td><button type="button" class="add-btn">Concluir</button></td>
                     </tr>
                 </tbody>
@@ -104,10 +106,10 @@
 </body>
 <script>
 const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get("id");
-console.log("id_filme:",id);
+const idUrl = urlParams.get("id");
+console.log("id_filme:",idUrl);
 
-    fetch(`http://localhost:8080/filme/buscar/${id}`)
+    fetch(`http://localhost:8080/filme/buscar/${idUrl}`)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -164,6 +166,51 @@ console.log("id_filme:",id);
         })
         .catch(error => console.error('Erro ao buscar filmes:', error));
 
+
+
+//================Impl Aluguel associado===================================
+
+ const corpoTabelaAluguel = document.getElementById("lista-emprestimos-relacionados");
+
+fetch(`http://localhost:8080/aluguel/buscafilme/${idUrl}`)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        const alugueis = data;
+        alugueis.forEach((aluguel) => {
+            const linha = document.createElement("tr");
+            const celulaId = document.createElement("td");
+            celulaId.textContent = aluguel.id;
+            linha.appendChild(celulaId);
+
+            const celuladataAluguel = document.createElement("td");
+            celuladataAluguel.textContent = aluguel.dataAluguel;
+            linha.appendChild(celuladataAluguel);            
+
+            const celulaDataDevolucao = document.createElement("td");
+            celulaDataDevolucao.textContent = aluguel.devolucaoPrevista;
+            linha.appendChild(celulaDataDevolucao);            
+
+            const celulaStatus = document.createElement("td");
+            celulaStatus.celulaPessoa = aluguel.status;
+            linha.appendChild(celulaStatus);   
+
+            const celulaPessoa = document.createElement("td");
+            const idPessoaAluguel= aluguel.pessoa.id;
+            fetch(`http://localhost:8080/pessoa/buscar/${idPessoaAluguel}`).then((response) => response.json())
+            .then((data) => {
+                const nomePessoaAluguel=data.name;
+                console.log(nomePessoaAluguel);
+            
+            celulaPessoa.celulaPessoa=nomePessoaAluguel;          
+            linha.appendChild(celulaPessoa); 
+        })           
+        
+        corpoTabelaAluguel.appendChild(linha);
+
+        });                
+        
+})
 
 </script>
 </html>
