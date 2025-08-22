@@ -134,7 +134,10 @@
                         linha.appendChild(celulaId);
 
                         const celulaTitle = document.createElement("td");
-                        celulaTitle.textContent = filme.title;
+                        const linkTitle = document.createElement("a");
+                        linkTitle.textContent = filme.title;
+                        linkTitle.href = `3.1.detalhesFilme-Aluguel.html?id=${encodeURIComponent(filme.id)}`;
+                        celulaTitle.appendChild(linkTitle);
                         linha.appendChild(celulaTitle);
 
                         const celulaGenero = document.createElement("td");

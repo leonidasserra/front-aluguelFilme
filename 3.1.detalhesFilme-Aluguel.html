@@ -186,12 +186,21 @@ fetch(`http://localhost:8080/aluguel/buscafilme/${idUrl}`)
             linha.appendChild(celulaId);
 
             const celuladataAluguel = document.createElement("td");
-            celuladataAluguel.textContent = aluguel.dataAluguel;
-            console.log(aluguel.dataAluguel);
+            const dataAluguelRaw = String(aluguel.dataAluguel);
+            const ano= dataAluguelRaw.slice(0,4);
+            const mes= dataAluguelRaw.slice(5,7);
+            const dia= dataAluguelRaw.slice(8,10);
+            const dataAluguelTratada = dia+'/'+mes+'/'+ano;
+            celuladataAluguel.textContent = dataAluguelTratada;
             linha.appendChild(celuladataAluguel);
 
             const celulaDataDevolucao = document.createElement("td");
-            celulaDataDevolucao.textContent = aluguel.devolucaoPrevista;
+            const dataDevolucaoRaw = String(aluguel.devolucaoPrevista);
+            const anoDevolu= dataDevolucaoRaw.slice(0,4);
+            const mesDevolu= dataDevolucaoRaw.slice(5,7);
+            const diaDevolu= dataDevolucaoRaw.slice(8,10);
+            const dataDevolucaoTratada = diaDevolu+'/'+mesDevolu+'/'+anoDevolu;
+            celulaDataDevolucao.textContent = dataDevolucaoTratada;
             linha.appendChild(celulaDataDevolucao);
 
             const celulaPreco = document.createElement("td");
@@ -222,11 +231,13 @@ fetch(`http://localhost:8080/aluguel/buscafilme/${idUrl}`)
                     linha.appendChild(celulaBtn);
 
                     btnConcluirEmprestimo.addEventListener('click', () => {
+                        if(aluguel.status=="Ativo"){
                         const idAluguelConcluido = btnConcluirEmprestimo.value;
                         console.log(idAluguelConcluido);
                         
                         // Chamando a função para concluir o empréstimo
                         concluirEmprestimo(idAluguelConcluido, celulaStatus);
+                        }
                     });
                 });
 
