@@ -76,13 +76,13 @@
                 </thead>
                 <tbody id="lista-emprestimos-relacionados">
                     <tr>
-                        <td>0</td>
+                        <!-- <td>0</td>
                         <td>11/08/2025</a></td>
                         <td>10/09/2025</td>
                         <td>39,50</td>
                         <td>Ativo</td>
                         <td></td>
-                        <td><button type="button" class="add-btn">Concluir</button></td>
+                        <td><button type="button" class="add-btn">Concluir</button></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -170,7 +170,9 @@ console.log("id_filme:",idUrl);
 
 //================Impl Aluguel associado===================================
 
- const corpoTabelaAluguel = document.getElementById("lista-emprestimos-relacionados");
+// ... (código anterior)
+
+const corpoTabelaAluguel = document.getElementById("lista-emprestimos-relacionados");
 
 fetch(`http://localhost:8080/aluguel/buscafilme/${idUrl}`)
     .then((response) => response.json())
@@ -185,32 +187,76 @@ fetch(`http://localhost:8080/aluguel/buscafilme/${idUrl}`)
 
             const celuladataAluguel = document.createElement("td");
             celuladataAluguel.textContent = aluguel.dataAluguel;
-            linha.appendChild(celuladataAluguel);            
+            console.log(aluguel.dataAluguel);
+            linha.appendChild(celuladataAluguel);
 
             const celulaDataDevolucao = document.createElement("td");
             celulaDataDevolucao.textContent = aluguel.devolucaoPrevista;
-            linha.appendChild(celulaDataDevolucao);            
+            linha.appendChild(celulaDataDevolucao);
+
+            const celulaPreco = document.createElement("td");
+            celulaPreco.textContent = aluguel.valorAluguel;
+            linha.appendChild(celulaPreco);
 
             const celulaStatus = document.createElement("td");
-            celulaStatus.celulaPessoa = aluguel.status;
-            linha.appendChild(celulaStatus);   
+            celulaStatus.textContent = aluguel.status;
+            linha.appendChild(celulaStatus);
 
             const celulaPessoa = document.createElement("td");
-            const idPessoaAluguel= aluguel.pessoa.id;
-            fetch(`http://localhost:8080/pessoa/buscar/${idPessoaAluguel}`).then((response) => response.json())
-            .then((data) => {
-                const nomePessoaAluguel=data.name;
-                console.log(nomePessoaAluguel);
-            
-            celulaPessoa.celulaPessoa=nomePessoaAluguel;          
-            linha.appendChild(celulaPessoa); 
-        })           
-        
-        corpoTabelaAluguel.appendChild(linha);
+            const idPessoaAluguel = aluguel.pessoa.id;
+            fetch(`http://localhost:8080/pessoa/buscar/${idPessoaAluguel}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const nomePessoaAluguel = data.name;
+                    console.log(nomePessoaAluguel);
+                    celulaPessoa.textContent = nomePessoaAluguel;
+                    linha.appendChild(celulaPessoa);
 
-        });                
-        
-})
+                    const celulaBtn = document.createElement("td");
+                    const btnConcluirEmprestimo = document.createElement("button");
+                    btnConcluirEmprestimo.classList.add("add-btn");
+                    btnConcluirEmprestimo.innerText = "Concluir";
+                    btnConcluirEmprestimo.setAttribute('type', 'button');
+                    btnConcluirEmprestimo.value = aluguel.id;
+                    celulaBtn.appendChild(btnConcluirEmprestimo);
+                    linha.appendChild(celulaBtn);
 
+                    btnConcluirEmprestimo.addEventListener('click', () => {
+                        const idAluguelConcluido = btnConcluirEmprestimo.value;
+                        console.log(idAluguelConcluido);
+                        
+                        // Chamando a função para concluir o empréstimo
+                        concluirEmprestimo(idAluguelConcluido, celulaStatus);
+                    });
+                });
+
+            corpoTabelaAluguel.appendChild(linha);
+        });
+    })
+    .catch(error => console.error('Erro ao buscar alugueis:', error));
+
+
+// Função de conclusão do empréstimo reestruturada
+async function concluirEmprestimo(idAluguel, celulaStatus) {
+    try {
+        const response = await fetch(`http://localhost:8080/aluguel/finalizar/${idAluguel}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+        }
+
+        console.log(`Empréstimo ${idAluguel} concluído com sucesso.`);
+        // Atualiza o status na tabela após o sucesso da requisição
+        celulaStatus.textContent = 'Finalizado';
+        window.location.reload(); // Recarrega a página para atualizar a tabela
+    } catch (error) {
+        console.error('Houve um problema ao concluir o empréstimo:', error);
+    }
+}
 </script>
 </html>

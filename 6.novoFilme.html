@@ -158,7 +158,9 @@ if (!response.ok) {
  })
  .then(data=>{
   console.log("sucesso:" + data);
-})
+}).then(
+alert("FILME ADICIONADO COM SUCESSO"))
+window.location.href='3.telaInicial.html';
 
  });
 
